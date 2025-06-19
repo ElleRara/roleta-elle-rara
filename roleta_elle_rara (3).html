@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Roleta da Sorte - Elle Rara</title>
+  <style>
+    body {
+      background-color: #CFCFCF;
+      color: #333;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #000;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+    .resultado {
+      margin-top: 20px;
+      font-size: 24px;
+      color: #555;
+    }
+    .logo {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <img src="ElleRara_logo_sem_fundo.png" alt="Logo Elle Rara" class="logo">
+  <h1>Roleta da Sorte - Elle Rara</h1>
+  <input type="text" id="codigoInput" placeholder="Digite seu código de acesso">
+  <button onclick="girarRoleta()">Girar</button>
+  <div class="resultado" id="resultado"></div>
+
+  <script>
+    const codigosValidos = new Set([
+      "ELLE-IEZM", "ELLE-Q9RQ", "ELLE-8V1A", "ELLE-VG0F", "ELLE-XJHM",
+      "ELLE-E4PB", "ELLE-3QW8", "ELLE-QRGM", "ELLE-J7RC", "ELLE-MW74",
+      "ELLE-0HUX", "ELLE-MX75", "ELLE-TN69", "ELLE-3KJY", "ELLE-WZC8",
+      "ELLE-8T7G", "ELLE-V9KL", "ELLE-27LP", "ELLE-YF0S", "ELLE-AKRC",
+      "ELLE-D9TU", "ELLE-MPQX", "ELLE-H7YE", "ELLE-UR2D", "ELLE-N54L",
+      "ELLE-GTFJ", "ELLE-KM39", "ELLE-5L8X", "ELLE-WRQV", "ELLE-X0EV",
+      "ELLE-CU1A", "ELLE-JY7G", "ELLE-B3FQ", "ELLE-NR02", "ELLE-ZU6V",
+      "ELLE-9THC", "ELLE-V5W3", "ELLE-HM2L", "ELLE-6FWD", "ELLE-1VXZ",
+      "ELLE-KLJD", "ELLE-FW73", "ELLE-XYC0", "ELLE-PM5K", "ELLE-GW2H",
+      "ELLE-2VBY", "ELLE-LTN4", "ELLE-7QDJ", "ELLE-X3VK", "ELLE-58PY"
+    ]);
+
+    const premios = [
+      { premio: "12% de desconto", chance: 25, cupom: "ELLE12" },
+      { premio: "5% de desconto", chance: 20, cupom: "ELLE5" },
+      { premio: "10% de desconto", chance: 20, cupom: "ELLE10" },
+      { premio: "15% de desconto", chance: 20, cupom: "ELLE15" },
+      { premio: "20% de desconto", chance: 15, cupom: "ELLE20" },
+    ];
+
+    function girarRoleta() {
+      const codigo = document.getElementById("codigoInput").value.trim().toUpperCase();
+      const resultadoEl = document.getElementById("resultado");
+
+      if (!codigosValidos.has(codigo)) {
+        resultadoEl.innerText = "Código inválido ou já utilizado.";
+        return;
+      }
+
+      codigosValidos.delete(codigo); // Queima o código
+
+      const roleta = [];
+      premios.forEach(p => {
+        for (let i = 0; i < p.chance; i++) {
+          roleta.push(p);
+        }
+      });
+
+      const sorteado = roleta[Math.floor(Math.random() * roleta.length)];
+      resultadoEl.innerHTML = `Parabéns! Você ganhou <strong>${sorteado.premio}</strong>!<br>Use o cupom: <strong>${sorteado.cupom}</strong>`;
+    }
+  </script>
+</body>
+</html>
